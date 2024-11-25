@@ -10,9 +10,9 @@ const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 });
 
-/** @type {import("@typescript-eslint/utils").TSESLint.FlatConfig.ConfigFile} */
-const config = [
+const config = ts.config(
   js.configs.recommended,
+  // @ts-expect-error Not sure why this errors
   ...tailwind.configs['flat/recommended'],
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   ...ts.configs.strictTypeChecked,
@@ -56,5 +56,5 @@ const config = [
   {
     ignores: ['**/**/node_modules', '**/**/.next', '**/**/public'],
   },
-];
+);
 export default config;
