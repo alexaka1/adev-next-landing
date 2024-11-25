@@ -5,6 +5,8 @@ import js from '@eslint/js';
 import ts from 'typescript-eslint';
 import tailwind from 'eslint-plugin-tailwindcss';
 import { FlatCompat } from '@eslint/eslintrc';
+// @ts-expect-error Does not ship types
+import reactCompiler from 'eslint-plugin-react-compiler';
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -55,6 +57,15 @@ const config = ts.config(
   },
   {
     ignores: ['**/**/node_modules', '**/**/.next', '**/**/public', 'src/components/ui'],
+  },
+  {
+    plugins: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      'react-compiler': reactCompiler,
+    },
+    rules: {
+      'react-compiler/react-compiler': 'error',
+    },
   },
 );
 export default config;
